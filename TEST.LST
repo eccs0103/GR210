@@ -1,4 +1,4 @@
-Turbo Assembler	 Version 4.1	    02/12/24 13:29:23	    Page 1
+Turbo Assembler	 Version 4.1	    02/12/24 13:45:23	    Page 1
 test.asm
 
 
@@ -17,8 +17,8 @@ test.asm
      12	000A  CD 21			     int 21h
      13	000C  B8 4C00			     mov ax, 4c00h
      14	000F  CD 21			     int 21h
-     15					     end start
-Turbo Assembler	 Version 4.1	    02/12/24 13:29:23	    Page 2
+     15				     end start
+Turbo Assembler	 Version 4.1	    02/12/24 13:45:23	    Page 2
 Symbol Table
 
 
@@ -28,7 +28,7 @@ Symbol Name			  Type	 Value
 
 ??DATE				  Text	 "02/12/24"
 ??FILENAME			  Text	 "test	  "
-??TIME				  Text	 "13:29:23"
+??TIME				  Text	 "13:45:22"
 ??VERSION			  Number 040A
 @32BIT				  Text	 0
 @CODE				  Text	 _TEXT
