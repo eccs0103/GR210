@@ -1,0 +1,54 @@
+Turbo Assembler	 Version 4.1	    02/12/24 13:29:23	    Page 1
+test.asm
+
+
+
+      1	0000			     .model small
+      2	0000			     .stack 64
+      3	0000			     .data
+      4	0000  48 45 4C 4C 4F 20	47+  a db 'HELLO GR210', 10, 13, '$'
+      5	      52 32 31 30 0A 0D	24
+      6	000E			     .code
+      7	0000			     start:
+      8	0000  B8 0000s			     mov ax, @data
+      9	0003  8E D8			     mov ds, ax
+     10	0005  B4 09			     mov ah, 9
+     11	0007  BA 0000r			     lea dx, a
+     12	000A  CD 21			     int 21h
+     13	000C  B8 4C00			     mov ax, 4c00h
+     14	000F  CD 21			     int 21h
+     15					     end start
+Turbo Assembler	 Version 4.1	    02/12/24 13:29:23	    Page 2
+Symbol Table
+
+
+
+
+Symbol Name			  Type	 Value
+
+??DATE				  Text	 "02/12/24"
+??FILENAME			  Text	 "test	  "
+??TIME				  Text	 "13:29:23"
+??VERSION			  Number 040A
+@32BIT				  Text	 0
+@CODE				  Text	 _TEXT
+@CODESIZE			  Text	 0
+@CPU				  Text	 0101H
+@CURSEG				  Text	 _TEXT
+@DATA				  Text	 DGROUP
+@DATASIZE			  Text	 0
+@FILENAME			  Text	 TEST
+@INTERFACE			  Text	 000H
+@MODEL				  Text	 2
+@STACK				  Text	 DGROUP
+@WORDSIZE			  Text	 2
+A				  Byte	 DGROUP:0000
+START				  Near	 _TEXT:0000
+
+Groups & Segments		  Bit Size Align  Combine Class
+
+DGROUP				  Group
+  STACK				  16  0040 Para	  Stack	  STACK
+  _DATA				  16  000E Word	  Public  DATA
+_TEXT				  16  0011 Word	  Public  CODE
+
