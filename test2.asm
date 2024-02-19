@@ -21,6 +21,8 @@ start:
 	add cx, ax		; cx = 3a + 5b
 	mov al, 2
 	imul c			; ax = 2c
-cseg ends
-
+	sub al, 4		; al = 2c - 4
+	mov dl, al		; dl = al = 2c - 4
+	mov ax, cx		; ax = cs = 3a + 5b
+	idiv dl			; al = (3a + 5b) / (2c - 4)
 end start
