@@ -1,24 +1,37 @@
-Turbo Assembler	 Version 4.1	    02/12/24 18:37:18	    Page 1
+Turbo Assembler	 Version 4.1	    02/19/24 13:58:31	    Page 1
 test.asm
 
 
 
-      1	0000			     .model small
-      2	0000			     .stack 64
-      3	0000			     .data
-      4	0000  48 45 4C 4C 4F 20	47+  a db 'HELLO GR210', 10, 13, '$'
-      5	      52 32 31 30 0A 0D	24
-      6	000E			     .code
-      7	0000			     start:
-      8	0000  B8 0000s			     mov ax, @data
-      9	0003  8E D8			     mov ds, ax
-     10	0005  B4 09			     mov ah, 9
-     11	0007  BA 0000r			     lea dx, a
-     12	000A  CD 21			     int 21h
-     13	000C  B8 4C00			     mov ax, 4c00h
-     14	000F  CD 21			     int 21h
-     15				     end start
-Turbo Assembler	 Version 4.1	    02/12/24 18:37:18	    Page 2
+      1	0000			     sseg segment stack
+      2	0000  0100*(??)			     db	256 DUP(?)
+      3	0100			     sseg ends
+      4
+      5	0000			     dseg segment
+      6	0000  48 65 6C 6C 6F 21	0D+	     message db	"Hello!", 0dh, 0ah, '$'
+      7	      0A 24
+      8	0009			     dseg ends
+      9
+     10	0000			     cseg segment
+     11					     assume cs:cseg, ds:dseg
+     12	0000			     start:
+     13	0000  B8 0000s			     mov ax, sseg
+     14	0003  8E D0			     mov ss, ax
+     15	0005  BC 0100r			     mov sp, offset sseg + 256 ; Set stack pointer
+     16
+     17	0008  B8 0000s			     mov ax, dseg
+     18	000B  8E D8			     mov ds, ax
+     19
+     20	000D  BA 0000r			     lea dx, message ; Load effective address of the message into dx
+     21	0010  B4 09			     mov ah, 9	     ; DOS function to print string
+     22	0012  CD 21			     int 21h
+     23
+     24	0014  B8 4C00			     mov ax, 4c00h   ; DOS function to exit
+     25	0017  CD 21			     int 21h
+     26	0019			     cseg ends
+     27
+     28				     end start
+Turbo Assembler	 Version 4.1	    02/19/24 13:58:31	    Page 2
 Symbol Table
 
 
@@ -26,29 +39,20 @@ Symbol Table
 
 Symbol Name			  Type	 Value
 
-??DATE				  Text	 "02/12/24"
+??DATE				  Text	 "02/19/24"
 ??FILENAME			  Text	 "test	  "
-??TIME				  Text	 "18:37:18"
+??TIME				  Text	 "13:58:31"
 ??VERSION			  Number 040A
-@32BIT				  Text	 0
-@CODE				  Text	 _TEXT
-@CODESIZE			  Text	 0
 @CPU				  Text	 0101H
-@CURSEG				  Text	 _TEXT
-@DATA				  Text	 DGROUP
-@DATASIZE			  Text	 0
+@CURSEG				  Text	 CSEG
 @FILENAME			  Text	 TEST
-@INTERFACE			  Text	 000H
-@MODEL				  Text	 2
-@STACK				  Text	 DGROUP
 @WORDSIZE			  Text	 2
-A				  Byte	 DGROUP:0000
-START				  Near	 _TEXT:0000
+MESSAGE				  Byte	 DSEG:0000
+START				  Near	 CSEG:0000
 
 Groups & Segments		  Bit Size Align  Combine Class
 
-DGROUP				  Group
-  STACK				  16  0040 Para	  Stack	  STACK
-  _DATA				  16  000E Word	  Public  DATA
-_TEXT				  16  0011 Word	  Public  CODE
+CSEG				  16  0019 Para	  none
+DSEG				  16  0009 Para	  none
+SSEG				  16  0100 Para	  Stack
 
