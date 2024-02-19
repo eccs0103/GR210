@@ -18,7 +18,7 @@ cseg segment
 	push ax
 	mov ax, dseg
 	mov ds, ax
-
+start:
 	mov al, 3
 	imul a			; ax = 3a
 	mov cx, ax		; cx = 3a
@@ -37,4 +37,4 @@ cseg segment
 	int 21h
 cseg ends
 
-end
+end start
