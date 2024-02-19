@@ -25,4 +25,10 @@ start:
 	mov dl, al		; dl = al = 2c - 4
 	mov ax, cx		; ax = cs = 3a + 5b
 	idiv dl			; al = (3a + 5b) / (2c - 4)
+	mov res, al
+
+	mov ax 4c00h
+	int 21h
 end start
+
+cseg ends
