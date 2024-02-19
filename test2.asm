@@ -12,7 +12,7 @@ dseg ends
 
 cseg segment
 	assume cs:cseg, ss:sseg ds:dseg
-start:
+
 	mov al, 3
 	imul a			; ax = 3a
 	mov cx, ax		; cx = 3a
@@ -29,6 +29,7 @@ start:
 
 	mov ax 4c00h
 	int 21h
-end start
-
+	
 cseg ends
+
+end
