@@ -13,6 +13,12 @@ dseg ends
 cseg segment
 	assume cs:cseg, ss:sseg ds:dseg
 
+	push ds
+	sub ax, ax
+	push ax
+	mov ax, dseg
+	mov ds, ax
+
 	mov al, 3
 	imul a			; ax = 3a
 	mov cx, ax		; cx = 3a
@@ -29,7 +35,6 @@ cseg segment
 
 	mov ax 4c00h
 	int 21h
-	
 cseg ends
 
 end
