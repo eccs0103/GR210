@@ -11,7 +11,7 @@ dseg segment
 dseg ends
 
 cseg segment
-	assume cs:cseg, ss:sseg ds:dseg
+	assume cs:cseg, ss:sseg, ds:dseg
 
 	push ds
 	sub ax, ax
@@ -33,7 +33,7 @@ start:
 	idiv dl			; al = (3a + 5b) / (2c - 4)
 	mov res, al
 
-	mov ax 4c00h
+	mov ax, 4c00h
 	int 21h
 cseg ends
 
