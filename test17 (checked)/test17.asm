@@ -21,42 +21,42 @@ main proc far
 	lea dx, endl
 	int 21h
 traverse:
-	mov al, tox[si]
+	mov  al,          tox[si]
 	call is_upper
-	cmp dl, 1
-	jne nex_iter
-	inc bl
-	add al, 20h
-	mov nor_tox[di], al
-	inc di
+	cmp  dl,          1
+	jne  nex_iter
+	inc  bl
+	add  al,          20h
+	mov  nor_tox[di], al
+	inc  di
 nex_iter:
-	inc si
+	inc  si
 	loop traverse
-	mov nor_tox[di], '$'
-	cmp bl, 0
-	jne inchvor
-	mov ah, 9
-	lea dx, message
-	int 21h
-	jmp to_end
+	mov  nor_tox[di], '$'
+	cmp  bl,          0
+	jne  inchvor
+	mov  ah,          9
+	lea  dx,          message
+	int  21h
+	jmp  to_end
 inchvor:
 	mov ah, 9
 	lea dx, nor_tox
 	int 21h
 to_end:
 	ret
-main endp
+main     endp
 
 is_upper proc
 	push cx si ax
-	xor dl, dl
-	cmp al, 'A'
-	jb false_re
-	cmp al, 'Z'
-	ja false_re
-	mov dl, 1
+	xor  dl, dl
+	cmp  al, 'A'
+	jb   false_re
+	cmp  al, 'Z'
+	ja   false_re
+	mov  dl, 1
 false_re:
 	pop ax si cx
 	ret
 is_upper endp
-end  main
+end      main
