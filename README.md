@@ -1,10 +1,8 @@
 # Assembler
-## Initialize
-1. `mount D D:\GR210`
-## Run
-1. `tasm test.asm/zi/l`
-2. `tlink test.obj`
-3. `td test.exe`
-## Tasks
-1. trvac angvacum hashvel 10-ic mec 3-i vra bajanvox tarreri gumary
-2. zangvacic stanal entazangvac kazmvac 7-ic mec tveric
+## Guide
+- Initialize directory with `mount D D:\GR210`.
+- Assemble the code via `tasm test.asm`.
+- Link the assembled objects via `tlink test.obj`.
+- Run or debug linked application:
+  - Run the application via `test.exe`.
+  - Debug the application via `td test.exe`.
