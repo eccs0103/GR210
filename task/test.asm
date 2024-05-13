@@ -1,35 +1,91 @@
 .model small
-.stack 100h
+.stack 64
 .data
-
+		Matrix  dw 1, 3, 6, 100, 200, 300, 6, 28, 496, 5, 25, 125
+		Columns db 3
+		Rows    db 4
 .code
-Main   proc far
-	mov  ax, @data
-	mov  ds, ax
-	;Code #region
-	mov  ax, 64
-	mov  bx, 8
-	call IsDivide
-	mov  ah, 2
-	;mov  dl, dl
-	int  21h
-	;Code #endregion
-	ret
-Main     endp
+Main proc far
+		mov  ax, @data
+		mov  ds, ax
+		;Code #region
+		mov  ax, 28
+		mov  bx, 7
+		call IsDivis
+		;Code #endregion
+		ret
+Main    endp
 
-; Is `ax` dividing to `bx`
-; Returns (0 | 1) in `dl`
-IsDivide proc
-	push ax bx
-	div  bx
-	cmp  dx, 0
-	jne  False1
-	mov  dl, 1
-	jmp  ProcEnd1
-	False1:
-	mov  dl, 0
+; Ստուգում է ax ռեգիստորը բաժանվում է bx-ի վրա անմնացորդ
+; Արդյունքը վերադարձնում է 0 / 1 տեսքով dl-ում
+IsDivis proc
+		push ax dx    ; պահում ենք փոփոխվող ռեգիստորները
+		xor  dx, dx   ; զրոյացնում ենք dx-ը բաժանելու համար
+		div  bx       ; բաժանում ենք ax-ը bx-ի վրա ստանալով dx մնացորդ
+		cmp  dx, 0    ; համեմատում ենք մնացորդը 0-ի հետ
+		je   True1    ; եթե հավասար է անցնում է True1 նշիչին
+		pop  dx       ; հակառակ դեպքում վերականգնում ենք dx-ը (dh-ը վերականգնելու համար)
+		xor  dl, dl   ; dl-ը զրոյացնում ենք (այսինքն false արժեք)
+		jmp  ProcEnd1 ; անցնում ենք ProcEnd1 նշիչին
+	True1:
+		pop dx    ; ճիշտ արդյունքի դեպքում վերականգնում ենք dx-ը (dh-ը վերականգնելու համար)
+		mov dl, 1 ; dl-ին վերագրում ենք 1 (այսինքն true արժեք)
 	ProcEnd1:
-	pop  bx ax
-	ret
-IsDivide endp
+		pop ax ; վերականգնում ենք ax-ը
+		ret 
+IsDivis  endp
+
+; Ստուգում է ax ռեգիստորը կատարյալ է
+; Արդյունքը վերադարձնում է 0 / 1 տեսքով dl-ում
+IsPerfec proc
+		push ax bx si cx dx ; պահում ենք փոփոխվող ռեգիստորները
+		push ax             ; պահում ենք ax-ը շուտով վերականգնելու համար
+		xor  si, si         ; զրոյացնում ենք գումարը (բաժանարարների գումարը կպահենք si-ում, ուրիշ ռեգիստոր չկա ¯\_(ツ)_/¯)
+		mov  bx, 2          ; պատրաստվում ենք բաժանել 2-ի
+		div  bx             ; բաժանում ենք 2-ի
+		mov  cx, ax         ; արդյունքը տեղափոխում ենք cx (որպես հաշվիչ և հերթական բաժանարար)
+		pop  ax             ; վերականգնում ենք ax-ը
+	DivCheck: 
+		mov  bx, cx   ; բաժանարարները հերթով տեղափոխում ենք bx
+		call IsDivis  ; ստուգում ենք բաժանելիությունը
+		cmp  dl, 1
+		jne  NextIte1 ; եթե չի բաժանվում անցնում ենք հաջորդ բաժանարարին
+		add  si, bx   ; բաժանվելու դեպքում գումարում ենք si-ին
+	NextIte1: 
+		loop DivCheck ; կրկնում ենք ցիկլը քանի դեռ բաժանարարները >= 1
+		pop  dx       ; վերականգնում ենք dx-ը (dh-ը վերականգնելու համար)
+		xor  dl, dl   ; զրոյացնում ենք dl-ը (եթե false արդյունք ստացվի կթողնենք այդպես)
+		cmp  ax, si   ; համեմատում ենք նախնական թիվն ու գումարը
+		jne  ToEnd1   ; եթե հավասար չեն անցնում ենք վերջին (false) արդյունքով
+		mov  dl, 1    ; եթե հավասար չեն անցնում ենք վերջին (true) արդյունքով
+	ToEnd1:
+		pop cx si bx ax ; վերականգնում ենք փոփոխված ռեգիստորները
+		ret
+IsPerfec endp
+
+; Տպում է ax-ում գտնվող թիվը կոնսոլում
+PrNumber proc
+		push bx cx ax dx ; պահում ենք փոփոխվող ռեգիստորները
+		mov  bx, 10      ; պատրաստվում ենք բաժանել 10-ի
+		xor  cx, cx      ; զրոյացնում ենք cx-ը (որպես թվանշանների հաշվիչ)
+	CheckDig:
+		cmp  ax, 0    ; համեմատում ենք թիվը 0-ի հետ
+		je   PopDigs  ; եթե հավասար է վերջացնում ենք թվանշանների բաժանումը
+		xor  dx, dx   ; հակառակ դեպքում պատրաստվում ենք բաժանման
+		div  bx       ; բաժանում ենք 10-ի
+		push dx       ; մնացորդը պահում ենք stack-ում
+		inc  cx       ; թվանշանների քանակը ավելացնում ենք 1-ով
+		jmp  CheckDig ; կրկնում ենք
+		cmp  cx, 0    ; ավարտելուց հետո ստուգում ենք թվանշանների քանակը
+		jz   ToEnd2   ; եթե զրո է վերջացնում ենք տպելը
+	PopDigs:
+		pop  dx      ; հակառակ դեպքում stack-ից վերցնում ենք վերջին ավելացրած թվանշանը
+		add  dx, 30h ; դարձնում ենք սիմվոլ
+		mov  ah, 6   ; տպում ենք
+		int  21h
+		loop PopDigs ; կրկնում ենք
+	ToEnd2:
+		pop dx ax cx bx ; վերականգնում ենք փոփոխված ռեգիստորները
+		ret
+PrNumber endp
 end      Main
