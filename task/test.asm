@@ -1,7 +1,7 @@
 .model small
 .stack 64
 .data
-		Matrix  dw 1, 3, 6, 100, 200, 300, 6, 28, 496, 5, 25, 125
+		Matrix  dw 1, 3, 6, 100, 200, 300, 6, 28, 496, 6, 28, 496
 		Columns db 3
 		Rows    db 4
 .code
@@ -9,10 +9,28 @@ Main proc far
 		mov ax, @data
 		mov ds, ax
 
-		mov  bx, 12
-		mov  cx, 3
-		call IsPfcRow
-	
+		xor dh, dh      ; կատարյալ տողերի քանակը կպահենք dh-ում
+		xor bx, bx      ; հաշվարկը կսկսենք 0-ից
+		mov al, Columns ; ax-ում կպահենք սյուների քանակը արագ հասանելիության համար
+		xor ah, ah
+		mov cl, Rows    ; cx-ում տողերի քանակով պետք է կրկնենք տվյալ գործողությունը
+		xor ch, ch
+	MtrxLoop:
+		push cx       ; պահում ենք cx-ի արժեքը, քանի որ նրանով ենք աշխատելու
+		mov  cx, ax   ; ֆունկցիան պետք է անցնի սյուների քանակին հավասար քանակությամբ անդամների վրայով
+		call IsPfcRow ; ստուգում ենք տողի կատարյալ լինելը
+		cmp  dl, 1
+		jne  NextIte2 ; չլինելու դեպքում անցնում ենք NextIte2
+		inc  dh       ; լինելու դեպքում ավելացնում ենք 1-ով նոր ենք անցնում
+	NextIte2:
+		pop  cx       ; վերականգնում ենք cx-ը
+		add  bx, ax   ; bx-ը պետք է ավելացվի սյուների քանակ * բայթերի քանակով, որը տվյալ դեպքում 2 է
+		add  bx, ax   ; հետևաբար ես ուղղակի 2 անգամ կավելացնեմ bx-ին սյուների քանակը
+		loop MtrxLoop ; կրկնում ենք ցիկլը
+		mov  al, dh
+		xor  ah, ah
+		call PrNumber
+
 		ret
 Main    endp
 
