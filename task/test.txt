@@ -1,7 +1,7 @@
 .model small
 .stack 64
 .data
-Matrix	dw 1, 3, 6, 100, 200, 300, 6, 28, 496, 6, 28, 496
+Matrix	dw 1, 3, 6, 100, 200, 300, 6, 28, 496, 5, 25, 125
 Columns	db 3
 Rows	db 4
 .code
