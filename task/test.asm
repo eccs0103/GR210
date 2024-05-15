@@ -111,7 +111,7 @@ PrNumber proc
 	         mov  ah, 6             	;տպում ենք
 	         int  21h
 	         loop PopDigs           	;թվանշանների քանակը 0 չլինելու դեպքում կրկնում ենք
-	ProcEnd4:pop  dx ax cx bx       	;վերականգնում ենք փոփոխված ռեգիստորները
+	         pop  dx ax cx bx       	;վերականգնում ենք փոփոխված ռեգիստորները
 	         ret
 PrNumber endp
 
