@@ -12,17 +12,19 @@ Main proc far
 	         ret
 Main endp
 
-	;Converts number in AL to character
+	; Converts the number in AL to a character.
 NumToChr proc
 	         add  al, 30h
 	         ret
 NumToChr endp
-	;Converts character in AL to number
+	
+	; Converts the character in AL to a number.
 ChrToNum proc
 	         sub  al, 30h
 	         ret
 ChrToNum endp
-	;Writes number in AX to console.
+	
+	; Writes the number in AX to the console.
 WriteNum proc
 	         push bx cx ax dx
 	         mov  bx, 10
@@ -42,7 +44,8 @@ WriteNum proc
 	         pop  dx ax cx bx
 	         ret
 WriteNum endp
-	;Reads character from console and sets it in AL.
+	
+	; Reads a character from the console and stores it in AL.
 ReadChr proc
 	         push ax dx
 	         mov  ah, 1
@@ -53,7 +56,8 @@ ReadChr proc
 	         pop  dx
 	         ret
 ReadChr endp
-	;Writes character in AL to console.
+	
+	; Writes the character in AL to the console.
 WriteChr proc
 	         push ax
 	         mov  dl, al
@@ -62,7 +66,8 @@ WriteChr proc
 	         pop  ax
 	         ret
 WriteChr endp
-	;Reads string from console and sets it at address DX.
+	
+	; Reads a string from the console and stores it at address DX.
 ReadStr proc
 	         push ax
 	         mov  ah, 10
@@ -70,7 +75,8 @@ ReadStr proc
 	         pop  ax
 	         ret
 ReadStr endp
-	;Gets it address from DX and writes string to console.
+	
+	; Gets the address from DX and writes the string to the console.
 WriteStr proc
 	         push ax
 	         mov  ah, 9
@@ -78,7 +84,8 @@ WriteStr proc
 	         pop  ax
 	         ret
 WriteStr endp
-	;Clears the console
+	
+	; Clears the console
 Clear proc
 	         push ax
 	         mov  al, 2
