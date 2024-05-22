@@ -17,7 +17,7 @@ NumToChr proc
 	         add  al, 30h
 	         ret
 NumToChr endp
-	;Converts number in AL to character
+	;Converts character in AL to number
 ChrToNum proc
 	         sub  al, 30h
 	         ret
