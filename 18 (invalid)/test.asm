@@ -7,42 +7,42 @@
 	Message db "Text isn't contain lowercases$"
 .code
 Main proc far
-	mov  ax,         @data
-	mov  ds,         ax
+	mov  AX,         @data
+	mov  DS,         AX
 	;Code #region
-	mov  ah,         10
-	lea  dx,         Text
+	mov  AH,         10
+	lea  DX,         Text
 	int  21h
-	mov  ah,         9
-	lea  dx,         NewLine
+	mov  AH,         9
+	lea  DX,         NewLine
 	int  21h
-	xor  bl,         bl
-	mov  si,         2
-	xor  di,         di
-	mov  cl,         Text + 1
-	xor  ch,         ch
+	xor  BL,         BL
+	mov  SI,         2
+	xor  DI,         DI
+	mov  CL,         Text + 1
+	xor  CH,         CH
 	Mapping:
-	mov  al,         Text[si]
+	mov  AL,         Text[SI]
 	call IsLower
-	cmp  dl,         1
+	cmp  DL,         1
 	jne  LoopEnd1
-	mov  Result[di], al
-	inc  di
-	inc  bl
+	mov  Result[DI], AL
+	inc  DI
+	inc  BL
 	LoopEnd1:
-	inc  si
+	inc  SI
 	loop Mapping
-	mov  Result[di], '$'
-	cmp  bl,         0
+	mov  Result[DI], '$'
+	cmp  BL,         0
 	jg   HaveLow
-	mov  ah,         9
-	lea  dx,         Message
+	mov  AH,         9
+	lea  DX,         Message
 	int  21h
 	jmp  ToEnd
 	HaveLow:
 	call PrintNum
-	mov  ah,         10
-	lea  dx,         Result
+	mov  AH,         10
+	lea  DX,         Result
 	int  21h
 	ToEnd:
 	;Code #endregion
@@ -50,37 +50,37 @@ Main proc far
 Main    endp
 
 IsLower proc
-	push ax bx cx si di
-	xor  dl, dl
-	cmp  al, 'a'
+	push AX BX CX SI DI
+	xor  DL, DL
+	cmp  AL, 'a'
 	jb   FalseRe1
-	cmp  al, 'z'
+	cmp  AL, 'z'
 	ja   FalseRe1
-	mov  dl, 1
+	mov  DL, 1
 	FalseRe1:
-	pop  di si cx bx ax
+	pop  DI SI CX BX AX
 IsLower  endp
 
 PrintNum proc
-	push ax bx cx dx si di
-	mov  bl, 10
-	mov  al, bl
-	xor  cx, cx
+	push AX BX CX DX SI DI
+	mov  BL, 10
+	mov  AL, BL
+	xor  CX, CX
 	HaveDig:
-	xor  ah, ah
-	idiv bl
-	push ax
-	inc  cx
-	cmp  al, 0
+	xor  AH, AH
+	idiv BL
+	push AX
+	inc  CX
+	cmp  AL, 0
 	jne  HaveDig
 	PopDigs:
-	pop  dx
-	mov  dl, dh
-	add  dl, 30h
-	mov  ah, 6
+	pop  DX
+	mov  DL, DH
+	add  DL, 30h
+	mov  AH, 6
 	int  21h
 	loop PopDigs
-	pop  di si dx cx bx ax
+	pop  DI SI DX CX BX AX
 	ret
 PrintNum endp
 end      Main

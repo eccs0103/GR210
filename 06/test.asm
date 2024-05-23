@@ -5,29 +5,29 @@
     res db ?
 .code
 start:
-    mov ax, @data
-    mov ds, ax
-    xor si, si
-    xor dx, dx
-    mov cx, 7
+    mov AX, @data
+    mov DS, AX
+    xor SI, SI
+    xor DX, DX
+    mov CX, 7
 func:
-    mov al, a[si]
-    cmp al, 5
+    mov AL, a[SI]
+    cmp AL, 5
     jg foo
-    inc si
+    inc SI
     loop func
 foo:
-    dec cx
+    dec CX
 foo2:
-    inc si
-    mov al, a[si]
-    test al, 1
+    inc SI
+    mov AL, a[SI]
+    test AL, 1
     jnz foo1
-    inc dl
+    inc DL
     loop foo2
 foo1:
-    mov res, dl
-    mov ax, 4c00h
+    mov res, DL
+    mov AX, 4c00h
     int 21h
     end start
     

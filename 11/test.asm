@@ -6,55 +6,55 @@
 	result db  ?
 .code
 main proc far
-	mov ax, @data
-	mov ds, ax
-	xor bx, bx
-	mov cx, count + 1
-	mov si, count
+	mov AX, @data
+	mov DS, AX
+	xor BX, BX
+	mov CX, count + 1
+	mov SI, count
 array_traverse:
-	dec  cx
-	dec  si
-	mov  al, array[si]
-	test bh, 1
+	dec  CX
+	dec  SI
+	mov  AL, array[SI]
+	test BH, 1
 	jnz  count_even
 	call check_7_and_5
-	test dx, 1
+	test DX, 1
 	jz   array_traverse
 count_even:
 	call check_even
-	test dx, 1
+	test DX, 1
 	jz   loop_end
-	inc  bl
+	inc  BL
 loop_end:
 	loop array_traverse
-	mov  result, bl
+	mov  result, BL
 	ret
 main          endp
 
 check_7_and_5 proc
-	push bx cx
-	xor  dx, dx
-	cmp  al, 7
+	push BX CX
+	xor  DX, DX
+	cmp  AL, 7
 	jle  procedure_end
-	xor  ah, ah
-	mov  bl, 5
-	idiv bl
-	test ah, 1
+	xor  AH, AH
+	mov  BL, 5
+	idiv BL
+	test AH, 1
 	jnz  procedure_end
-	mov  dx, 1
+	mov  DX, 1
 procedure_end:
-	pop cx bx
+	pop CX BX
 	ret
 check_7_and_5 endp
 
 check_even    proc
-	push bx cx
-	xor  dx, dx
-	test al, 1
+	push BX CX
+	xor  DX, DX
+	test AL, 1
 	jnz  procedure_end
-	mov  dx, 1
+	mov  DX, 1
 procedure_end:
-	pop cx bx
+	pop CX BX
 	ret
 check_even endp
 end        main

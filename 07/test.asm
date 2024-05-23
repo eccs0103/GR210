@@ -5,25 +5,25 @@
 	res db ?
 .code
 start:
-	mov ax, @data
-	mov ds, ax
-	xor si, si
-	xor dx, dx
-	xor ax, ax
-	xor bl, bl
-	mov cx, 7
+	mov AX, @data
+	mov DS, AX
+	xor SI, SI
+	xor DX, DX
+	xor AX, AX
+	xor BL, BL
+	mov CX, 7
 foo:
-	mov dl, a[si]
-	cmp dl, 5
+	mov DL, a[SI]
+	cmp DL, 5
 	jng foo1
-	add al, dl
-	adc ah, 0
-	inc bl
+	add AL, DL
+	adc AH, 0
+	inc BL
 foo1:
-	inc si
+	inc SI
 	loop foo
-	idiv bl
-	mov res, al
-	mov ax, 4c00h
+	idiv BL
+	mov res, AL
+	mov AX, 4c00h
 	int 21h
 	end start

@@ -4,8 +4,8 @@
 	
 .code
 Main proc far
-	         mov  ax, @data
-	         mov  ds, ax
+	         mov  AX, @data
+	         mov  DS, AX
 	;Code below
 	         
 	;Code above
@@ -14,107 +14,107 @@ Main endp
 
 	;Clears the console
 Clear proc
-	         push ax
-	         mov  al, 2
-	         xor  ah, ah
+	         push AX
+	         mov  AL, 2
+	         xor  AH, AH
 	         int  10h
-	         pop  ax
+	         pop  AX
 	         ret
 Clear endp
 
 	;Converts the number in AL to a character.
 NumToChr proc
-	         add  al, 30h
+	         add  AL, 30h
 	         ret
 NumToChr endp
 
 	;Converts the character in AL to a number.
 ChrToNum proc
-	         sub  al, 30h
+	         sub  AL, 30h
 	         ret
 ChrToNum endp
 
 	;Reads a character from the console and stores it in AL.
 ReadChr proc
-	         push ax dx
-	         mov  ah, 1
+	         push AX DX
+	         mov  AH, 1
 	         int  21h
-	         mov  dl, al
-	         pop  ax
-	         mov  al, dl
-	         pop  dx
+	         mov  DL, AL
+	         pop  AX
+	         mov  AL, DL
+	         pop  DX
 	         ret
 ReadChr endp
 
 	;Writess the character in AL to the console.
 WriteChr proc
-	         push ax
-	         mov  dl, al
-	         mov  ah, 6
+	         push AX
+	         mov  DL, AL
+	         mov  AH, 6
 	         int  21h
-	         pop  ax
+	         pop  AX
 	         ret
 WriteChr endp
 
 	;Writes a newline to the console
 EndLine proc
-	         push ax
-	         mov  al, 10
+	         push AX
+	         mov  AL, 10
 	         call WriteChr
-	         mov  al, 13
+	         mov  AL, 13
 	         call WriteChr
-	         pop  ax
+	         pop  AX
 	         ret
 EndLine endp
 
 	;Writes the number in AX to the console.
 WriteNum proc
-	         push bx cx ax dx
-	         mov  bx, 10
-	         xor  cx, cx
-	CheckDig:xor  dx, dx
-	         div  bx
-	         push dx
-	         inc  cx
-	         cmp  ax, 0
+	         push BX CX AX DX
+	         mov  BX, 10
+	         xor  CX, CX
+	CheckDig:xor  DX, DX
+	         div  BX
+	         push DX
+	         inc  CX
+	         cmp  AX, 0
 	         jne  CheckDig
-	         xor  ax, ax
-	PopDigs: pop  dx
-	         add  dx, 30h
-	         mov  ah, 6
+	         xor  AX, AX
+	PopDigs: pop  DX
+	         add  DX, 30h
+	         mov  AH, 6
 	         int  21h
 	         loop PopDigs
-	         pop  dx ax cx bx
+	         pop  DX AX CX BX
 	         call EndLine
 	         ret
 WriteNum endp
 
 	;Reads a string from the console and stores it at address AX.
 ReadStr proc
-	         push dx si bx
-	         mov  dx, ax
-	         mov  ah, 10
+	         push DX SI BX
+	         mov  DX, AX
+	         mov  AH, 10
 	         int  21h
-	         inc  dx
-	         mov  si, dx
-	         mov  bl, [si]
-	         xor  bh, bh
-	         inc  dx
-	         mov  ax, dx
-	         add  bx, ax
-	         mov  byte ptr [bx], '$'
-	         pop  bx si dx
+	         inc  DX
+	         mov  SI, DX
+	         mov  BL, [SI]
+	         xor  BH, BH
+	         inc  DX
+	         mov  AX, DX
+	         add  BX, AX
+	         mov  byte ptr [BX], '$'
+	         pop  BX SI DX
 	         call EndLine
 	         ret
 ReadStr endp
 	
 	;Gets the address from AX and writes the string to the console.
 WriteStr proc
-	         push dx ax
-	         mov  dx, ax
-	         mov  ah, 9
+	         push DX AX
+	         mov  DX, AX
+	         mov  AH, 9
 	         int  21h
-	         pop  ax dx
+	         pop  AX DX
 	         call EndLine
 	         ret
 WriteStr endp

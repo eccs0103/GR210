@@ -7,20 +7,20 @@ dseg segment
 dseg ends
 
 cseg segment
-	assume cs:cseg, ds:dseg
+	assume CS:cseg, DS:dseg
 start:
-	mov ax, sseg
-	mov ss, ax
+	mov AX, sseg
+	mov SS, AX
 	mov sp, offset sseg + 256 ; Set stack pointer
 
-	mov ax, dseg
-	mov ds, ax
+	mov AX, dseg
+	mov DS, AX
 
-	lea dx, message ; Load effective address of the message into dx
-	mov ah, 9       ; DOS function to print string
+	lea DX, message ; Load effective address of the message into DX
+	mov AH, 9       ; DOS function to print string
 	int 21h
 
-	mov ax, 4c00h ; DOS function to exit
+	mov AX, 4c00h ; DOS function to exit
 	int 21h
 cseg ends
 

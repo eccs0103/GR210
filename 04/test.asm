@@ -6,23 +6,23 @@
 	c db 7
 .code
 start:
-	mov ax, @data
-	mov ds, ax
-	sub si, si
-	sub di, di
-	mov cx, 5
+	mov AX, @data
+	mov DS, AX
+	sub SI, SI
+	sub DI, DI
+	mov CX, 5
 func:
-	mov al, a[si]
-	mov dl, al
+	mov AL, a[SI]
+	mov DL, AL
 	cbw
 	idiv c
-	cmp ah, 0
+	cmp AH, 0
 	jne p
-	mov res[di], dl
-	inc di
+	mov res[DI], DL
+	inc DI
 p:
-	inc si
+	inc SI
 	loop func
-	mov ax, 4h00h
+	mov AX, 4h00h
 	int 21h
 	end start

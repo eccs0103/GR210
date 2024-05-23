@@ -5,40 +5,40 @@
     res db ?
 .code
 main proc far
-    mov ax, @data
-    mov ds, ax
-    xor si, si
-    mov cx, 5
-    xor dl, dl
+    mov AX, @data
+    mov DS, AX
+    xor SI, SI
+    mov CX, 5
+    xor DL, DL
 array_loop:
-    mov al, array[si]
-    mov dh, array[si + 1]
+    mov AL, array[SI]
+    mov DH, array[SI + 1]
     call is_simple_pair
-    cmp bl, 1
+    cmp BL, 1
     jne exit_array_loop
-    inc dl
+    inc DL
 exit_array_loop:
-    inc si
+    inc SI
     loop array_loop
 ret
 main endp
 
 is_simple_pair proc
-    push si cx ax dx
-    xor bl, bl
+    push SI CX AX DX
+    xor BL, BL
 is_equal:
-    cmp al, dl
+    cmp AL, DL
     jz restore_data
     jg al_substract_dh
-    xchg cl, dh
+    xchg CL, DH
 al_substract_dh:
-    sub al, dh
+    sub AL, DH
     jmp is_equal
-    cmp al, 1
+    cmp AL, 1
     jne restore_data
-    mov bl, 1
+    mov BL, 1
 restore_data:
-    pop dx ax cx si
+    pop DX AX CX SI
     ret
 is_simple_pair endp
 

@@ -5,36 +5,36 @@
     res db 6 dup(?)
 .code
 main proc far
-    mov ax, @data
-    mov ds, ax
-    xor si, si
-    mov cx, 6
-    xor di, di
+    mov AX, @data
+    mov DS, AX
+    xor SI, SI
+    mov CX, 6
+    xor DI, DI
 loop_traverse:
-    mov al, a[si]
+    mov AL, a[SI]
     call is_passed
-    cmp ah, 1
+    cmp AH, 1
     jne test_not_passed
-    mov res[di], al
-    inc di
+    mov res[DI], AL
+    inc DI
 test_not_passed:
-    inc si
+    inc SI
     loop loop_traverse
     ret
 main endp
 
 is_passed proc
-    push si cx di
-    xor ah, ah
-    test al, 1
+    push SI CX DI
+    xor AH, AH
+    test AL, 1
     jz return_false
-    test al, 2
+    test AL, 2
     jnz return_false
-    and al, 11110111b
-    xor al, 00010000b
-    mov ah, 1
+    and AL, 11110111b
+    xor AL, 00010000b
+    mov AH, 1
 return_false:
-    pop di cx si
+    pop DI CX SI
     ret
 is_passed endp
 end main

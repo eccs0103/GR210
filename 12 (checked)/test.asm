@@ -5,35 +5,35 @@
 	array2 db 6 dup(?)
 .code
 main proc far
-	mov ax, @data
-	mov ds, ax
-	mov cx, 5
-	xor si, si
+	mov AX, @data
+	mov DS, AX
+	mov CX, 5
+	xor SI, SI
 loop1:
-	mov al, array1[si]
+	mov AL, array1[SI]
 	call is_even
-	mov array2[si], dl
-	inc si
+	mov array2[SI], DL
+	inc SI
 	loop loop1
 	ret
 main          endp
 
 is_even proc
-	push cx si
-	xor bl, bl
-	mov cx, 8
-	xor dl, dl
+	push CX SI
+	xor BL, BL
+	mov CX, 8
+	xor DL, DL
 have_dig:
-	shl al, 1
+	shl AL, 1
 	jnc next_dig
-	inc bl
+	inc BL
 next_dig:
 	loop have_dig
-	test bl, 1
+	test BL, 1
 	jnz false_res
-	mov dl, 1
+	mov DL, 1
 false_res:
-	pop si cx
+	pop SI CX
 	ret
 is_even endp
 end        main

@@ -10,47 +10,47 @@ eseg segment "data"
 	tox1 db 20 dup(?)
 eseg ends
 cseg segment "code"
-	assume ss:sseg, ds:dseg, es:eseg, cs:cseg
+	assume SS:sseg, DS:dseg, ES:eseg, CS:cseg
 main proc far
-	push ds
-	xor  ax, ax
-	push ax
-	mov  ax, dseg
-	mov  ds, ax
+	push DS
+	xor  AX, AX
+	push AX
+	mov  AX, dseg
+	mov  DS, AX
 	; my code below
-	mov  ah, 10
-	lea  dx, tox
+	mov  AH, 10
+	lea  DX, tox
 	int  21h
-	lea  si, tox
-	lea  di, es:tox1
-	mov  cl, tox + 1
-	xor  ch, ch
+	lea  SI, tox
+	lea  DI, ES:tox1
+	mov  CL, tox + 1
+	xor  CH, CH
 	cld
 rep movsb
-	mov al, "A"
-	mov cl, tox + 1
-	xor ch, ch
-	lea di, es:tox1
+	mov AL, "A"
+	mov CL, tox + 1
+	xor CH, CH
+	lea DI, ES:tox1
 repne scasb
 	jnz chka_str    ; "A" was found
-	lea di, es:res
-	mov al, "A"
-	mov cx, 3
+	lea DI, ES:res
+	mov AL, "A"
+	mov CX, 3
 rep stosb
-	lea di, es:res + 6
-	mov cx, 3
+	lea DI, ES:res + 6
+	mov CX, 3
 rep stosb
-	lea di, es:res + 3
-	mov al, "*"
-	mov cx, 3
+	lea DI, ES:res + 3
+	mov AL, "*"
+	mov CX, 3
 rep stosb
-	mov ah, 9
-	lea dx, res
+	mov AH, 9
+	lea DX, res
 	int 21h
 	jmp code_end
 chka_str:
-	mov ah, 9
-	lea di, a
+	mov AH, 9
+	lea DI, a
 	int 21h
 code_end:
 	; my code above

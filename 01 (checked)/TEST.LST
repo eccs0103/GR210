@@ -13,20 +13,20 @@ test.asm
       8	0009			     dseg ends
       9
      10	0000			     cseg segment
-     11					     assume cs:cseg, ds:dseg
+     11					     assume CS:cseg, DS:dseg
      12	0000			     start:
-     13	0000  B8 0000s			     mov ax, sseg
-     14	0003  8E D0			     mov ss, ax
+     13	0000  B8 0000s			     mov AX, sseg
+     14	0003  8E D0			     mov SS, AX
      15	0005  BC 0100r			     mov sp, offset sseg + 256 ; Set stack pointer
      16
-     17	0008  B8 0000s			     mov ax, dseg
-     18	000B  8E D8			     mov ds, ax
+     17	0008  B8 0000s			     mov AX, dseg
+     18	000B  8E D8			     mov DS, AX
      19
-     20	000D  BA 0000r			     lea dx, message ; Load effective address of the message into dx
-     21	0010  B4 09			     mov ah, 9	     ; DOS function to print string
+     20	000D  BA 0000r			     lea DX, message ; Load effective address of the message into DX
+     21	0010  B4 09			     mov AH, 9	     ; DOS function to print string
      22	0012  CD 21			     int 21h
      23
-     24	0014  B8 4C00			     mov ax, 4c00h   ; DOS function to exit
+     24	0014  B8 4C00			     mov AX, 4c00h   ; DOS function to exit
      25	0017  CD 21			     int 21h
      26	0019			     cseg ends
      27

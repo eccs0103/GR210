@@ -11,29 +11,29 @@ dseg segment
 dseg ends
 
 cseg segment
-	assume cs:cseg, ss:sseg, ds:dseg
+	assume CS:cseg, SS:sseg, DS:dseg
 
-	push ds
-	sub ax, ax
-	push ax
-	mov ax, dseg
-	mov ds, ax
+	push DS
+	sub AX, AX
+	push AX
+	mov AX, dseg
+	mov DS, AX
 start:
-	mov al, 3
-	imul a			; ax = 3a
-	mov cx, ax		; cx = 3a
-	mov al, 5
-	imul b 			; ax = 5b
-	add cx, ax		; cx = 3a + 5b
-	mov al, 2
-	imul c			; ax = 2c
-	sub al, 4		; al = 2c - 4
-	mov dl, al		; dl = al = 2c - 4
-	mov ax, cx		; ax = cs = 3a + 5b
-	idiv dl			; al = (3a + 5b) / (2c - 4)
-	mov res, al
+	mov AL, 3
+	imul a			; AX = 3a
+	mov CX, AX		; CX = 3a
+	mov AL, 5
+	imul b 			; AX = 5b
+	add CX, AX		; CX = 3a + 5b
+	mov AL, 2
+	imul c			; AX = 2c
+	sub AL, 4		; AL = 2c - 4
+	mov DL, AL		; DL = AL = 2c - 4
+	mov AX, CX		; AX = CS = 3a + 5b
+	idiv DL			; AL = (3a + 5b) / (2c - 4)
+	mov res, AL
 
-	mov ax, 4c00h
+	mov AX, 4c00h
 	int 21h
 cseg ends
 

@@ -5,20 +5,20 @@
 	a dw 291
 .code
 main proc far
-	mov ax, @data
-	mov ds, ax
-	mov cx, 8
-	xor dl, dl
+	mov AX, @data
+	mov DS, AX
+	mov CX, 8
+	xor DL, DL
 number_traverse:
-	shr al, 1
+	shr AL, 1
 	jnc continue_loop
-	inc dl
+	inc DL
 continue_loop:
 	loop number_traverse
-	mov ax, b
-	mov cl, dl
-	ror ax, cl
-	mov b, ax
+	mov AX, b
+	mov CL, DL
+	ror AX, CL
+	mov b, AX
 	ret
 main endp
 end main

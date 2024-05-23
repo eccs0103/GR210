@@ -10,49 +10,49 @@ eseg segment "data"
 	array2 db 29 dup(?)
 eseg ends
 cseg segment "code"
-	      assume ss:sseg, ds:dseg, es:eseg, cs:cseg,
+	      assume SS:sseg, DS:dseg, ES:eseg, CS:cseg,
 Main proc far
-	      push   ds
-	      xor    ax, ax
-	      push   ax
-	      mov    ax, dseg
-	      mov    ds, ax
-	      mov    ax, eseg
-	      mov    es, ax
-	      mov    ah, 10
-	      lea    dx, array
+	      push   DS
+	      xor    AX, AX
+	      push   AX
+	      mov    AX, dseg
+	      mov    DS, AX
+	      mov    AX, eseg
+	      mov    ES, AX
+	      mov    AH, 10
+	      lea    DX, array
 	      int    21h
-	      xor    bl, bl
-	      xor    ch, ch
-	      mov    cl, array[1]
-	      lea    si, array[2]
-	      lea    di, es:array2
+	      xor    BL, BL
+	      xor    CH, CH
+	      mov    CL, array[1]
+	      lea    SI, array[2]
+	      lea    DI, ES:array2
 	      cld
 	      rep    movsb
-	      mov    al, 'S'
-	      lea    di, es:array2
-	      xor    ch, ch
-	      mov    cl, array[1]
+	      mov    AL, 'S'
+	      lea    DI, ES:array2
+	      xor    CH, CH
+	      mov    CL, array[1]
 	      repne  scasb
 	      jz     lab1
-	      mov    ah, 9
-	      lea    dx, message
+	      mov    AH, 9
+	      lea    DX, message
 	      int    21h
 	      jmp    final
-	lab1: mov    cx, 2
-	      lea    di, es:tox
-	      mov    al, '7'
+	lab1: mov    CX, 2
+	      lea    DI, ES:tox
+	      mov    AL, '7'
 	      rep    stosb
-	      mov    cx, 3
-	      lea    di, es:tox[2]
-	      mov    al, '*'
+	      mov    CX, 3
+	      lea    DI, ES:tox[2]
+	      mov    AL, '*'
 	      rep    stosb
-	      mov    cx, 2
-	      lea    di, es:tox[5]
-	      mov    al, '9'
+	      mov    CX, 2
+	      lea    DI, ES:tox[5]
+	      mov    AL, '9'
 	      rep    stosb
-	      mov    ah, 9
-	      lea    dx, es:tox
+	      mov    AH, 9
+	      lea    DX, ES:tox
 	      int    21h
 	final:ret
 Main endp

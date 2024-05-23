@@ -7,56 +7,56 @@
 	endl    db 10, 13, '$'
 .code
 main proc far
-	mov ax, @data
-	mov ds, ax
-	mov ah, 10
-	lea dx, tox
+	mov AX, @data
+	mov DS, AX
+	mov AH, 10
+	lea DX, tox
 	int 21h
-	mov cl, tox + 1
-	xor ch, ch
-	mov si, 2
-	xor di, di
-	xor bl, bl
-	mov ah, 9
-	lea dx, endl
+	mov CL, tox + 1
+	xor CH, CH
+	mov SI, 2
+	xor DI, DI
+	xor BL, BL
+	mov AH, 9
+	lea DX, endl
 	int 21h
 traverse:
-	mov  al,          tox[si]
+	mov  AL,          tox[SI]
 	call is_upper
-	cmp  dl,          1
+	cmp  DL,          1
 	jne  nex_iter
-	inc  bl
-	add  al,          20h
-	mov  nor_tox[di], al
-	inc  di
+	inc  BL
+	add  AL,          20h
+	mov  nor_tox[DI], AL
+	inc  DI
 nex_iter:
-	inc  si
+	inc  SI
 	loop traverse
-	mov  nor_tox[di], '$'
-	cmp  bl,          0
+	mov  nor_tox[DI], '$'
+	cmp  BL,          0
 	jne  inchvor
-	mov  ah,          9
-	lea  dx,          message
+	mov  AH,          9
+	lea  DX,          message
 	int  21h
 	jmp  to_end
 inchvor:
-	mov ah, 9
-	lea dx, nor_tox
+	mov AH, 9
+	lea DX, nor_tox
 	int 21h
 to_end:
 	ret
 main     endp
 
 is_upper proc
-	push cx si ax
-	xor  dl, dl
-	cmp  al, 'A'
+	push CX SI AX
+	xor  DL, DL
+	cmp  AL, 'A'
 	jb   false_re
-	cmp  al, 'Z'
+	cmp  AL, 'Z'
 	ja   false_re
-	mov  dl, 1
+	mov  DL, 1
 false_re:
-	pop ax si cx
+	pop AX SI CX
 	ret
 is_upper endp
 end      main

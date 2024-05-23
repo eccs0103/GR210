@@ -4,42 +4,42 @@
 	message db "Invalid symbol$"
 .code
 main proc far
-	         mov  ax, @data
-	         mov  ds, ax
-	         xor  dh, dh
+	         mov  AX, @data
+	         mov  DS, AX
+	         xor  DH, DH
 	again:   
-	         mov  ah, 1
+	         mov  AH, 1
 	         int  21h
-	         cmp  al, '*'
+	         cmp  AL, '*'
 	         je   proc_end
 	         call is_upp
-	         test bl, 1
+	         test BL, 1
 	         jz   again
-	         inc  dh
-	         mov  ah, 6
-	         mov  dl, al
+	         inc  DH
+	         mov  AH, 6
+	         mov  DL, AL
 	         int  21h
 	         jmp  again
 	proc_end:
-	         cmp  dh, 0
+	         cmp  DH, 0
 	         jne  very_end
-	         mov  ah, 9
-	         lea  dx, message
+	         mov  AH, 9
+	         lea  DX, message
 	         int  21h
 	very_end:
 	         ret
 main endp
 
 is_upp proc
-	         push ax
-	         xor  bl, bl
-	         cmp  al, 'A'
+	         push AX
+	         xor  BL, BL
+	         cmp  AL, 'A'
 	         jb   false_re
-	         cmp  al, 'Z'
+	         cmp  AL, 'Z'
 	         ja   false_re
-	         mov  bl, 1
+	         mov  BL, 1
 	false_re:
-	         pop  ax
+	         pop  AX
 	         ret
 is_upp endp
 end  main

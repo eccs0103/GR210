@@ -5,37 +5,37 @@
 	result db ?
 .code
 main proc far
-	mov ax, @data
-	mov ds, ax
-	xor bl, bl
-	mov cx, 6
-	xor si, si
+	mov AX, @data
+	mov DS, AX
+	xor BL, BL
+	mov CX, 6
+	xor SI, SI
 arr_trav:
-	mov  al, array[si]
+	mov  AL, array[SI]
 	call is2in5
-	test dl, 1
+	test DL, 1
 	jz   loop_end
-	inc  bl
+	inc  BL
 loop_end:
 	loop arr_trav
-	mov  result, bl
+	mov  result, BL
 	ret
 main   endp
 
 is2in5 proc
-	push bx cx si
-	xor  dl, dl
+	push BX CX SI
+	xor  DL, DL
 when_h_d:
 	cbw
-	cmp  al, 1
+	cmp  AL, 1
 	jl   proc_end
-	mov  bl, 5
-	idiv bl
-	cmp  ah, 2
+	mov  BL, 5
+	idiv BL
+	cmp  AH, 2
 	jne  when_h_d
-	mov  dl, 1
+	mov  DL, 1
 proc_end:
-	pop si cx bx
+	pop SI CX BX
 	ret
 is2in5 endp
 end    main
