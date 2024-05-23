@@ -1,7 +1,7 @@
 .model small
 .stack 64
 .data
-	
+	Text db 20, 21 dup(?)
 .code
 Main proc far
 	         mov  AX, @data
@@ -91,7 +91,7 @@ WriteNum endp
 
 	;Reads a string from the console and stores it at address AX.
 ReadStr proc
-	         push DX SI BX
+	         push DX AX SI BX
 	         mov  DX, AX
 	         mov  AH, 10
 	         int  21h
@@ -100,10 +100,9 @@ ReadStr proc
 	         mov  BL, [SI]
 	         xor  BH, BH
 	         inc  DX
-	         mov  AX, DX
-	         add  BX, AX
+	         add  BX, DX
 	         mov  byte ptr [BX], '$'
-	         pop  BX SI DX
+	         pop  BX SI AX DX
 	         call EndLine
 	         ret
 ReadStr endp
