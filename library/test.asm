@@ -1,7 +1,7 @@
 .model small
 .stack 64
 .data
-	NewLine db 10, 13, '$'
+	
 .code
 Main proc far
 	         mov  ax, @data
@@ -12,19 +12,62 @@ Main proc far
 	         ret
 Main endp
 
-	; Converts the number in AL to a character.
+	;Clears the console
+Clear proc
+	         push ax
+	         mov  al, 2
+	         xor  ah, ah
+	         int  10h
+	         pop  ax
+	         ret
+Clear endp
+
+	;Converts the number in AL to a character.
 NumToChr proc
 	         add  al, 30h
 	         ret
 NumToChr endp
-	
-	; Converts the character in AL to a number.
+
+	;Converts the character in AL to a number.
 ChrToNum proc
 	         sub  al, 30h
 	         ret
 ChrToNum endp
-	
-	; Writes the number in AX to the console.
+
+	;Reads a character from the console and stores it in AL.
+ReadChr proc
+	         push ax dx
+	         mov  ah, 1
+	         int  21h
+	         mov  dl, al
+	         pop  ax
+	         mov  al, dl
+	         pop  dx
+	         ret
+ReadChr endp
+
+	;Writess the character in AL to the console.
+WriteChr proc
+	         push ax
+	         mov  dl, al
+	         mov  ah, 6
+	         int  21h
+	         pop  ax
+	         ret
+WriteChr endp
+
+	;Writes a newline to the console
+EndLine proc
+	         push ax
+	         mov  al, 10
+	         call WriteChr
+	         mov  al, 13
+	         call WriteChr
+	         pop  ax
+	         ret
+EndLine endp
+
+	;Writes the number in AX to the console.
 WriteNum proc
 	         push bx cx ax dx
 	         mov  bx, 10
@@ -42,57 +85,38 @@ WriteNum proc
 	         int  21h
 	         loop PopDigs
 	         pop  dx ax cx bx
+	         call EndLine
 	         ret
 WriteNum endp
-	
-	; Reads a character from the console and stores it in AL.
-ReadChr proc
-	         push ax dx
-	         mov  ah, 1
-	         int  21h
-	         mov  dl, al
-	         pop  ax
-	         mov  al, dl
-	         pop  dx
-	         ret
-ReadChr endp
-	
-	; Writes the character in AL to the console.
-WriteChr proc
-	         push ax
-	         mov  dl, al
-	         mov  ah, 6
-	         int  21h
-	         pop  ax
-	         ret
-WriteChr endp
-	
-	; Reads a string from the console and stores it at address DX.
+
+	;Reads a string from the console and stores it at address AX.
 ReadStr proc
-	         push ax
+	         push dx si bx
+	         mov  dx, ax
 	         mov  ah, 10
 	         int  21h
-	         pop  ax
+	         inc  dx
+	         mov  si, dx
+	         mov  bl, [si]
+	         xor  bh, bh
+	         inc  dx
+	         mov  ax, dx
+	         add  bx, ax
+	         mov  byte ptr [bx], '$'
+	         pop  bx si dx
+	         call EndLine
 	         ret
 ReadStr endp
 	
-	; Gets the address from DX and writes the string to the console.
+	;Gets the address from AX and writes the string to the console.
 WriteStr proc
-	         push ax
+	         push dx ax
+	         mov  dx, ax
 	         mov  ah, 9
 	         int  21h
-	         pop  ax
+	         pop  ax dx
+	         call EndLine
 	         ret
 WriteStr endp
-	
-	; Clears the console
-Clear proc
-	         push ax
-	         mov  al, 2
-	         xor  ah, ah
-	         int  10h
-	         pop  ax
-	         ret
-Clear endp
 
 end Main
