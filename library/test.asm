@@ -20,17 +20,28 @@ Clear proc
 	         ret
 Clear endp
 
-	;Converts the number in AL to a character.
-NumToChr proc
+	;Converts the digit in AL to a character.
+DigToChr proc
 	         add  AL, 30h
 	         ret
-NumToChr endp
+DigToChr endp
 
-	;Converts the character in AL to a number.
-ChrToNum proc
+	;Converts the character in AL to a digit.
+ChrToDig proc
 	         sub  AL, 30h
 	         ret
-ChrToNum endp
+ChrToDig endp
+
+	;Returns (0 | 1) in DL if the character in AL is digit
+IsDigit proc
+	         xor  DL, DL
+	         cmp  AL, '0'
+	         jb   Result1
+	         cmp  AL, '9'
+	         ja   Result1
+	         mov  DL, 1
+	Result1: ret
+IsDigit endp
 
 	;Makes upper character in AL to lower
 ToLower proc
@@ -48,22 +59,22 @@ ToUpper endp
 IsLower proc
 	         xor  DL, DL
 	         cmp  AL, 'a'
-	         jb   Result1
+	         jb   Result2
 	         cmp  AL, 'z'
-	         ja   Result1
+	         ja   Result2
 	         mov  DL, 1
-	Result1: ret
+	Result2: ret
 IsLower endp
 
 	;Returns (0 | 1) in DL if the character in AL is upper
 IsUpper proc
 	         xor  DL, DL
 	         cmp  AL, 'A'
-	         jb   Result2
+	         jb   Result3
 	         cmp  AL, 'Z'
-	         ja   Result2
+	         ja   Result3
 	         mov  DL, 1
-	Result2: ret
+	Result3: ret
 IsUpper endp
 
 	;Reads a character from the console and stores it in AL.
