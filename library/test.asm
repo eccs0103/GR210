@@ -1,7 +1,5 @@
 .model small
 .stack 64
-.data
-	Text db 20, 21 dup(?)
 .code
 Main proc far
 	         mov  AX, @data
@@ -33,6 +31,40 @@ ChrToNum proc
 	         sub  AL, 30h
 	         ret
 ChrToNum endp
+
+	;Makes upper character in AL to lower
+ToLower proc
+	         add  AL, 20h
+	         ret
+ToLower endp
+
+	;Makes lower character in AL to upper
+ToUpper proc
+	         sub  AL, 20h
+	         ret
+ToUpper endp
+
+	;Returns (0 | 1) in DL if the character in AL is lower
+IsLower proc
+	         xor  DL, DL
+	         cmp  AL, 'a'
+	         jb   Result1
+	         cmp  AL, 'z'
+	         ja   Result1
+	         mov  DL, 1
+	Result1: ret
+IsLower endp
+
+	;Returns (0 | 1) in DL if the character in AL is upper
+IsUpper proc
+	         xor  DL, DL
+	         cmp  AL, 'A'
+	         jb   Result2
+	         cmp  AL, 'Z'
+	         ja   Result2
+	         mov  DL, 1
+	Result2: ret
+IsUpper endp
 
 	;Reads a character from the console and stores it in AL.
 ReadChr proc
@@ -117,5 +149,4 @@ WriteStr proc
 	         call EndLine
 	         ret
 WriteStr endp
-
 end Main
