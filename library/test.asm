@@ -89,7 +89,7 @@ ReadChr proc
 	         ret
 ReadChr endp
 
-	;Writess the character in AL to the console.
+	;Writes the character in AL to the console.
 WriteChr proc
 	         push AX
 	         mov  DL, AL
