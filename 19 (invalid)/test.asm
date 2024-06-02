@@ -29,6 +29,7 @@ Main proc far
 	      lea    DI, ES:array2
 	      cld
 	      rep    movsb
+		  
 	      mov    AL, 'S'
 	      lea    DI, ES:array2
 	      xor    CH, CH
